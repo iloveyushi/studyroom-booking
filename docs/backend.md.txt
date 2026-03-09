@@ -26,7 +26,7 @@ com.studyroom/
 └─ application.yml # 核心配置文件
 
 ## 四、运行方式
-1. 环境准备：安装JDK17+、MySQL8.0、Maven3.8+，启动MySQL服务；
+1. 环境准备 ：安装JDK17+、MySQL8.0、Maven3.8+，启动MySQL服务；
 2. 数据库配置：创建`study_room_reservation`数据库，导入SQL脚本；
 3. 项目配置：修改`application.yml`中的数据库连接信息（地址/用户名/密码）；
 4. 启动项目：①IDEA运行主启动类；②终端执行`mvn spring-boot:run`；

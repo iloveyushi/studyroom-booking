@@ -1,0 +1,17 @@
+# 依赖包
+node_modules/
+target/
+*.iml
+*.idea
+
+# 环境变量
+.env
+.env.local
+
+# 日志
+logs/
+*.log
+
+# 系统文件
+.DS_Store
+Thumbs.db

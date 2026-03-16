@@ -15,3 +15,11 @@
 - 前端：thymeleaf + bootstrap
 - 后端：springboot + mybatis
 - 数据库：MySQL 8.0
+
+## UI Design
+
+Figma Design Link:
+
+(https://www.figma.com/design/RJbIMAiZ9FqZqpVX3TdCng/Untitled?node-id=12-36&p=f&t=MyWig4S9AJpbnrqW-0)
+
+Permission: Anyone with the link can view.

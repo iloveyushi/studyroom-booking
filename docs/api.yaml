@@ -1,0 +1,403 @@
+﻿openapi: 3.0.3
+info:
+  title: Classroom Reservation API
+  version: 1.0.0
+  description: Backend API for classroom reservation system
+servers:
+  - url: http://localhost:9099
+
+tags:
+  - name: Auth
+  - name: Admin
+  - name: User
+
+paths:
+  /api/auth/login:
+    post:
+      tags: [Auth]
+      summary: Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [username, password]
+              properties:
+                username: { type: string }
+                password: { type: string }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ApiResponse' }
+
+  /api/auth/me:
+    get:
+      tags: [Auth]
+      summary: Current user
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ApiResponse' }
+
+  /api/auth/logout:
+    post:
+      tags: [Auth]
+      summary: Logout
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ApiResponse' }
+
+  /api/admin/dashboard:
+    get:
+      tags: [Admin]
+      summary: Admin dashboard
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ApiResponse' }
+
+  /api/admin/students:
+    get:
+      tags: [Admin]
+      summary: List students
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ApiResponse' }
+    post:
+      tags: [Admin]
+      summary: Create student
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [s_id, s_name]
+              properties:
+                s_id: { type: string }
+                s_name: { type: string }
+                s_class: { type: string }
+                s_year: { type: string }
+                s_major: { type: string }
+                s_phone_number: { type: string }
+      responses:
+        '200':
+          description: OK
+
+  /api/admin/students/{sId}:
+    delete:
+      tags: [Admin]
+      summary: Delete student
+      parameters:
+        - in: path
+          name: sId
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: OK }
+
+  /api/admin/classrooms:
+    get:
+      tags: [Admin]
+      summary: List classrooms
+      responses:
+        '200': { description: OK }
+    post:
+      tags: [Admin]
+      summary: Create classroom
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [room_id, room_name]
+              properties:
+                room_id: { type: string }
+                room_name: { type: string }
+                building_id: { type: string }
+                room_floor: { type: string }
+                available_seat: { type: string }
+                is_multimedia_room: { type: string }
+      responses:
+        '200': { description: OK }
+
+  /api/admin/classrooms/{roomId}:
+    put:
+      tags: [Admin]
+      summary: Update classroom
+      parameters:
+        - in: path
+          name: roomId
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                room_name: { type: string }
+                room_floor: { type: string }
+                available_seat: { type: string }
+                is_multimedia_room: { type: string }
+      responses:
+        '200': { description: OK }
+    delete:
+      tags: [Admin]
+      summary: Delete classroom
+      parameters:
+        - in: path
+          name: roomId
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: OK }
+
+  /api/admin/classrooms/available:
+    post:
+      tags: [Admin]
+      summary: Create classroom availability
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                time_id: { type: string }
+                room_id: { type: string }
+                building_id: { type: string }
+                available_date: { type: string }
+                available_num: { type: string }
+      responses:
+        '200': { description: OK }
+
+  /api/admin/reservations/students:
+    get:
+      tags: [Admin]
+      summary: Query student reservations
+      parameters:
+        - in: query
+          name: searchByIdOrName
+          schema: { type: string }
+        - in: query
+          name: selectedYear
+          schema: { type: string }
+        - in: query
+          name: selectedMajor
+          schema: { type: string }
+      responses:
+        '200': { description: OK }
+
+  /api/admin/reservations/classrooms:
+    get:
+      tags: [Admin]
+      summary: Query classroom reservations
+      parameters:
+        - in: query
+          name: searchByIdOrName
+          schema: { type: string }
+        - in: query
+          name: selectedTime
+          schema: { type: string }
+        - in: query
+          name: selectDate
+          schema: { type: string }
+      responses:
+        '200': { description: OK }
+
+  /api/admin/blacklist:
+    get:
+      tags: [Admin]
+      summary: List blacklist
+      responses:
+        '200': { description: OK }
+    post:
+      tags: [Admin]
+      summary: Add blacklist
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                selectStudentId: { type: string }
+                selectDate: { type: string }
+      responses:
+        '200': { description: OK }
+
+  /api/admin/blacklist/{sId}:
+    delete:
+      tags: [Admin]
+      summary: Remove blacklist
+      parameters:
+        - in: path
+          name: sId
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: OK }
+
+  /api/user/dashboard:
+    get:
+      tags: [User]
+      summary: User dashboard
+      responses:
+        '200': { description: OK }
+
+  /api/user/profile:
+    get:
+      tags: [User]
+      summary: Get profile
+      responses:
+        '200': { description: OK }
+    put:
+      tags: [User]
+      summary: Update profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                s_name: { type: string }
+                s_year: { type: string }
+                s_major: { type: string }
+                s_class: { type: string }
+                s_phone_number: { type: string }
+      responses:
+        '200': { description: OK }
+
+  /api/user/password:
+    put:
+      tags: [User]
+      summary: Change password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [old_password, new_password, cm_password]
+              properties:
+                old_password: { type: string }
+                new_password: { type: string }
+                cm_password: { type: string }
+      responses:
+        '200': { description: OK }
+
+  /api/user/reservations:
+    get:
+      tags: [User]
+      summary: My reservations
+      responses:
+        '200': { description: OK }
+
+  /api/user/reservations/cancel:
+    post:
+      tags: [User]
+      summary: Cancel reservation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [room_id, time_id, reservation_date, building_id]
+              properties:
+                room_id: { type: string }
+                time_id: { type: string }
+                reservation_date: { type: string }
+                building_id: { type: string }
+      responses:
+        '200': { description: OK }
+
+  /api/user/reservations/available:
+    get:
+      tags: [User]
+      summary: Query available classrooms
+      parameters:
+        - in: query
+          name: selectLocation
+          schema: { type: string }
+        - in: query
+          name: selectBuildingName
+          schema: { type: string }
+        - in: query
+          name: selectRoomName
+          schema: { type: string }
+        - in: query
+          name: selectRoomFloor
+          schema: { type: string }
+        - in: query
+          name: selectedTime
+          schema: { type: string }
+        - in: query
+          name: selectDate
+          schema: { type: string }
+      responses:
+        '200': { description: OK }
+
+  /api/user/reservations/preview:
+    post:
+      tags: [User]
+      summary: Preview reservation selections
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [selectedCheckbox]
+              properties:
+                selectedCheckbox:
+                  type: array
+                  items: { type: string }
+      responses:
+        '200': { description: OK }
+
+  /api/user/reservations/submit:
+    post:
+      tags: [User]
+      summary: Submit reservation selections
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [selectedCheckbox]
+              properties:
+                selectedCheckbox:
+                  type: array
+                  items: { type: string }
+      responses:
+        '200': { description: OK }
+
+components:
+  schemas:
+    ApiResponse:
+      type: object
+      properties:
+        success: { type: boolean }
+        message: { type: string }
+        data:
+          type: object
+          nullable: true

@@ -1,25 +1,99 @@
-# 自习室预约系统 - api 说明文档
-## 一、模块功能
-- 接口管理：按用户/预约/管理员划分模块，提供前端全部接口；
-- 数据交互：HTTP+JSON传输，统一响应格式（code/msg/data）；
-- 接口校验：参数/业务规则校验，返回友好错误提示；
-- 权限适配：区分普通用户/管理员接口权限。
+﻿# API 使用说明
 
-## 二、技术选型
-- 通信协议：HTTP
-- 数据格式：JSON
-- 接口风格：RESTful
-- 跨域处理：@CrossOrigin注解
+## 基本信息
+- Base URL: `http://localhost:9099`
+- 统一响应:
 
-## 三、接口目录结构
-/api
-├─ /user # 用户接口（注册 / 查询）
-├─ /reservation # 预约接口（创建 / 取消）
-├─ /admin # 管理员接口（管理 / 统计）
-└─ /studyRoom # 自习室接口（查询 / 状态更新）
+```json
+{
+  "success": true,
+  "message": "ok",
+  "data": {}
+}
+```
 
-## 四、调用方式
-1. 前置：启动后端服务（http://localhost:8080）；
-2. 调用：前端用axios/AJAX发起GET/POST请求，传递对应参数；
-3. 响应：统一返回`{code:1/0, msg:"提示", data:结果}`；
-4. 测试：用Postman/Apifox直接请求接口验证。
+## 鉴权方式
+- 使用 Session/Cookie。
+- 前端请求必须携带：`credentials: 'include'`。
+
+```js
+fetch(url, {
+  method: 'GET',
+  credentials: 'include'
+})
+```
+
+## 认证接口
+- `POST /api/auth/login`
+- `GET /api/auth/me`
+- `POST /api/auth/logout`
+
+## 管理端接口
+- `GET /api/admin/dashboard`
+- `GET /api/admin/students`
+- `POST /api/admin/students`
+- `DELETE /api/admin/students/{sId}`
+- `GET /api/admin/classrooms`
+- `POST /api/admin/classrooms`
+- `PUT /api/admin/classrooms/{roomId}`
+- `DELETE /api/admin/classrooms/{roomId}`
+- `POST /api/admin/classrooms/available`
+- `GET /api/admin/reservations/students`
+- `GET /api/admin/reservations/classrooms`
+- `GET /api/admin/blacklist`
+- `POST /api/admin/blacklist`
+- `DELETE /api/admin/blacklist/{sId}`
+
+## 用户端接口
+- `GET /api/user/dashboard`
+- `GET /api/user/profile`
+- `PUT /api/user/profile`
+- `PUT /api/user/password`
+- `GET /api/user/reservations`
+- `POST /api/user/reservations/cancel`
+- `GET /api/user/reservations/available`
+- `POST /api/user/reservations/preview`
+- `POST /api/user/reservations/submit`
+
+## 常用请求示例
+
+### 登录
+`POST /api/auth/login`
+
+```json
+{
+  "username": "admin",
+  "password": "123456"
+}
+```
+
+### 新增学生
+`POST /api/admin/students`
+
+```json
+{
+  "s_id": "20260001",
+  "s_name": "Alice",
+  "s_class": "1",
+  "s_year": "2026",
+  "s_major": "CS",
+  "s_phone_number": "13800138000"
+}
+```
+
+### 提交预约
+`POST /api/user/reservations/submit`
+
+```json
+{
+  "selectedCheckbox": ["T01-R101", "T02-R101"]
+}
+```
+
+## 错误处理建议
+- `400`：参数或业务错误
+- `401`：未登录/无权限
+- `409`：数据冲突
+- `500`：服务异常
+
+当 `success=false` 时，优先展示 `message`。

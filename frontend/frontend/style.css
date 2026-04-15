@@ -1,0 +1,64 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Microsoft YaHei", sans-serif;
+  background: linear-gradient(130deg, #eef5ff 0%, #f7fff1 100%);
+  color: #1a1a1a;
+}
+
+.container {
+  max-width: 900px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+.panel {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+form {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+label {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+input, button {
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid #c7d0e0;
+  padding: 0 10px;
+}
+
+button {
+  background: #0c7c59;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.92;
+}
+
+pre {
+  margin: 12px 0 0;
+  padding: 12px;
+  background: #1b1f2a;
+  color: #f5f7ff;
+  border-radius: 8px;
+  overflow: auto;
+}

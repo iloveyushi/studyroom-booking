@@ -14,4 +14,14 @@
 ## 技术栈（初步规划）
 - 前端：thymeleaf + bootstrap
 - 后端：springboot + mybatis
-- 数据库：MySQL 8.0自习室预约系统UI设计Figma链接：https://www.figma.com/design/neWgrC87xNczbIFWdsrpsk/studyroom%E7%94%A8%E6%88%B7%E7%AB%AF?node-id=0-1&t=DTshT7i1BuAcGnWJ-1
+- 数据库：MySQL 8.0
+
+## UI Design
+
+Figma Design Link（郭静怡）：
+https://www.figma.com/design/RJbIMAiZ9FqZqpVX3TdCng/Untitled?node-id=12-36&p=f&t=MyWig4S9AJpbnrqW-0
+
+Figma Design Link（付娆）：
+https://www.figma.com/design/neWgrC87xNczbIFWdsrpsk/studyroom%E7%94%A8%E6%88%B7%E7%AB%AF?node-id=0-1&t=DTshT7i1BuAcGnWJ-1
+
+Permission: Anyone with the link can view.

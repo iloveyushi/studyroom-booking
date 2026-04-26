@@ -1,3 +1,4 @@
+[![Frontend Coverage](https://codecov.io/gh/aaa11221/studyroom-booking/branch/develop/graph/badge.svg?flag=frontend)](https://codecov.io/gh/aaa11221/studyroom-booking)
 # 自习室预约系统
 
 ## 团队成员

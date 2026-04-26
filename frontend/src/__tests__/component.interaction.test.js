@@ -1,5 +1,5 @@
 const { fireEvent, screen } = require("@testing-library/dom");
-const { bindApp } = require("../app");
+const { bindApp } = require("./app");
 
 function createPage() {
   document.body.innerHTML = `

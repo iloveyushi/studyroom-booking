@@ -1,37 +1,12 @@
-name: Tests and Coverage
+name: Frontend Coverage
 
 on:
   push:
-    branches: [main]
+    branches: [develop]
   pull_request:
-    branches: [main]
+    branches: [develop]
 
 jobs:
-  backend-test:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
-
-      - name: Run backend tests
-        run: mvn clean test
-
-      - name: Upload backend coverage
-        uses: codecov/codecov-action@v5
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./target/site/jacoco/jacoco.xml
-          flags: backend
-          name: backend-coverage
-          fail_ci_if_error: false
-
   frontend-test:
     runs-on: ubuntu-latest
 
@@ -44,19 +19,19 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install frontend dependencies
-        working-directory: frontend
+      - name: Install frontend test dependencies
+        working-directory: frontend/src/__tests__
         run: npm ci
 
-      - name: Run frontend tests
-        working-directory: frontend
-        run: npm test -- --coverage --watchAll=false
+      - name: Run frontend tests with coverage
+        working-directory: frontend/src/__tests__
+        run: npx jest --config jest.config.cjs --coverage --coverageReporters=lcov --watchAll=false
 
-      - name: Upload frontend coverage
+      - name: Upload frontend coverage to Codecov
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./frontend/coverage/lcov.info
+          files: ./frontend/src/__tests__/coverage/lcov.info
           flags: frontend
           name: frontend-coverage
           fail_ci_if_error: false

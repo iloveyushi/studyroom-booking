@@ -1,4 +1,4 @@
-const { createApiClient } = require("../app");
+const { createApiClient } = require("./app");
 
 describe("Mock API 请求测试", () => {
   test("成功请求会返回 data", async () => {

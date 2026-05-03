@@ -5,13 +5,15 @@
   "description": "Frontend test workspace for classroom reservation project.",
   "main": "app.js",
   "scripts": {
-    "test": "jest --runInBand"
+    "test": "jest --ci --coverage --runInBand",
+    "lint": "eslint src/ --max-warnings 0"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@testing-library/dom": "^10.4.1",
+    "eslint": "^9.26.0",
     "jest": "^30.3.0",
     "jest-environment-jsdom": "^30.3.0"
   }

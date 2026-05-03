@@ -1,3 +1,4 @@
+[![CI](https://github.com/aaa11221/studyroom-booking/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/aaa11221/studyroom-booking/actions/workflows/ci.yml)
 [![Frontend Coverage](https://codecov.io/gh/aaa11221/studyroom-booking/branch/develop/graph/badge.svg?flag=frontend)](https://codecov.io/gh/aaa11221/studyroom-booking)
 # 自习室预约系统
 

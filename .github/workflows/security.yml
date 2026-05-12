@@ -9,6 +9,9 @@ on:
 jobs:
   security:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend # 指定工作目录为 backend 文件夹
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

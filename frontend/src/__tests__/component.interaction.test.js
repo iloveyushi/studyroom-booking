@@ -7,13 +7,13 @@ function createPage() {
       <form id="loginForm">
         <input id="username" />
         <input id="password" />
-        <button type="submit">登录</button>
+        <button type="submit">login</button>
       </form>
-      <button id="meBtn">读取 me</button>
+      <button id="meBtn">me</button>
       <pre id="meResult"></pre>
-      <button id="availableBtn">读取 available</button>
+      <button id="availableBtn">available</button>
       <pre id="availableResult"></pre>
-      <button id="logoutBtn">退出</button>
+      <button id="logoutBtn">logout</button>
       <pre id="logoutResult"></pre>
     </main>
   `;
@@ -23,12 +23,12 @@ function delayedResolve(data) {
   return new Promise((resolve) => setTimeout(() => resolve(data), 0));
 }
 
-describe("组件渲染/交互测试", () => {
+describe("component interaction", () => {
   beforeEach(() => {
     createPage();
   });
 
-  test("登录提交会触发 API 调用并显示结果", async () => {
+  test("login submits API request", async () => {
     const apiClient = jest.fn().mockResolvedValue({
       success: true,
       message: "ok",
@@ -36,97 +36,108 @@ describe("组件渲染/交互测试", () => {
     });
     bindApp(document, apiClient);
 
-    document.getElementById("username").value = " 32001041 ";
-    document.getElementById("password").value = " 123 ";
+    document.getElementById("username").value = "student_01";
+    document.getElementById("password").value = "123456";
     fireEvent.submit(document.getElementById("loginForm"));
 
     await Promise.resolve();
 
     expect(apiClient).toHaveBeenCalledWith("/api/auth/login", {
       method: "POST",
-      body: JSON.stringify({ username: "32001041", password: "123" })
+      body: JSON.stringify({ username: "student_01", password: "123456" })
     });
     expect(document.getElementById("meResult").textContent).toContain('"success": true');
   });
 
-  test("点击 me 按钮会调用 /api/auth/me", async () => {
-    const apiClient = jest.fn().mockResolvedValue({
-      success: true,
-      data: { s_id: "32001041" }
-    });
+  test("me button calls me api", async () => {
+    const apiClient = jest.fn().mockResolvedValue({ success: true, data: { s_id: "32001041" } });
     bindApp(document, apiClient);
 
-    fireEvent.click(screen.getByText("读取 me"));
+    fireEvent.click(screen.getByText("me"));
     await Promise.resolve();
 
     expect(apiClient).toHaveBeenCalledWith("/api/auth/me");
   });
 
-  test("点击 available 按钮会渲染可预约数据", async () => {
-    const apiClient = jest.fn().mockResolvedValue({
-      success: true,
-      data: [{ roomId: "R101" }]
-    });
+  test("available button renders data", async () => {
+    const apiClient = jest.fn().mockResolvedValue({ success: true, data: [{ roomId: "R101" }] });
     bindApp(document, apiClient);
 
-    fireEvent.click(screen.getByText("读取 available"));
+    fireEvent.click(screen.getByText("available"));
     await Promise.resolve();
 
     expect(document.getElementById("availableResult").textContent).toContain("R101");
   });
 
-  test("点击 logout 按钮会用 POST 调用退出接口", async () => {
-    const apiClient = jest.fn().mockResolvedValue({
-      success: true,
-      message: "logout success"
-    });
+  test("logout button uses POST", async () => {
+    const apiClient = jest.fn().mockResolvedValue({ success: true, message: "logout success" });
     bindApp(document, apiClient);
 
-    fireEvent.click(screen.getByText("退出"));
+    fireEvent.click(screen.getByText("logout"));
     await Promise.resolve();
 
     expect(apiClient).toHaveBeenCalledWith("/api/auth/logout", { method: "POST" });
   });
 
-  test("登录失败会显示错误信息", async () => {
-    const apiClient = jest.fn().mockRejectedValue(new Error("用户名或密码错误"));
+  test("login failure shows masked error", async () => {
+    const apiClient = jest.fn().mockRejectedValue(new Error("Internal SQL Error"));
     bindApp(document, apiClient);
 
-    document.getElementById("username").value = "bad";
-    document.getElementById("password").value = "bad";
+    document.getElementById("username").value = "student_01";
+    document.getElementById("password").value = "123456";
     fireEvent.submit(document.getElementById("loginForm"));
     await Promise.resolve();
 
-    expect(document.getElementById("meResult").textContent).toContain("用户名或密码错误");
+    const text = document.getElementById("meResult").textContent;
+    expect(text).toContain('"success": false');
+    expect(text).not.toContain("Internal SQL Error");
   });
 
-  test("点击 me 后会先显示加载状态", async () => {
-    const apiClient = jest.fn().mockImplementation(() =>
-      delayedResolve({ success: true, data: { name: "Alice" } })
-    );
+  test("me button shows loading state first", async () => {
+    const apiClient = jest.fn().mockImplementation(() => delayedResolve({ success: true, data: { name: "Alice" } }));
     bindApp(document, apiClient);
 
-    fireEvent.click(screen.getByText("读取 me"));
+    fireEvent.click(screen.getByText("me"));
     expect(document.getElementById("meResult").textContent).toContain('"loading": true');
   });
 
-  test("点击 available 失败会显示错误信息", async () => {
+  test("available failure shows generic error", async () => {
     const apiClient = jest.fn().mockRejectedValue(new Error("Network Error"));
     bindApp(document, apiClient);
 
-    fireEvent.click(screen.getByText("读取 available"));
+    fireEvent.click(screen.getByText("available"));
     await Promise.resolve();
 
-    expect(document.getElementById("availableResult").textContent).toContain("Network Error");
+    const text = document.getElementById("availableResult").textContent;
+    expect(text).toContain('"success": false');
+    expect(text).not.toContain("Network Error");
   });
 
-  test("点击 logout 后会先显示加载状态", async () => {
-    const apiClient = jest.fn().mockImplementation(() =>
-      delayedResolve({ success: true, message: "ok" })
-    );
+  test("logout button shows loading state first", async () => {
+    const apiClient = jest.fn().mockImplementation(() => delayedResolve({ success: true, message: "ok" }));
     bindApp(document, apiClient);
 
-    fireEvent.click(screen.getByText("退出"));
+    fireEvent.click(screen.getByText("logout"));
     expect(document.getElementById("logoutResult").textContent).toContain('"loading": true');
+  });
+
+  test("login lockout after five failed attempts", async () => {
+    jest.useFakeTimers();
+    const apiClient = jest.fn().mockRejectedValue(new Error("invalid"));
+    bindApp(document, apiClient);
+
+    document.getElementById("username").value = "student_01";
+    document.getElementById("password").value = "123456";
+
+    for (let i = 0; i < 5; i += 1) {
+      fireEvent.submit(document.getElementById("loginForm"));
+      await Promise.resolve();
+    }
+
+    fireEvent.submit(document.getElementById("loginForm"));
+    const text = document.getElementById("meResult").textContent;
+    expect(text).toContain('"success": false');
+    expect(text).toContain("10");
+    jest.useRealTimers();
   });
 });

@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 [![CI](https://github.com/aaa11221/studyroom-booking/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/aaa11221/studyroom-booking/actions/workflows/ci.yml)
+=======
+<<<<<<< HEAD
+[![CI](https://github.com/iloveyushi/studyroom-booking/actions/workflows/ci.yml/badge.svg)](https://github.com/iloveyushi/studyroom-booking/actions)
+[![Backend Coverage](https://codecov.io/gh/iloveyushi/studyroom-booking/branch/develop/graph/badge.svg?flag=backend)](https://codecov.io/gh/iloveyushi/studyroom-booking)
+=======
+>>>>>>> upstream/develop
 [![Frontend Coverage](https://codecov.io/gh/aaa11221/studyroom-booking/branch/develop/graph/badge.svg?flag=frontend)](https://codecov.io/gh/aaa11221/studyroom-booking)
 # 自习室预约系统
 
@@ -27,3 +34,4 @@ Figma Design Link（付娆）：
 https://www.figma.com/design/neWgrC87xNczbIFWdsrpsk/studyroom%E7%94%A8%E6%88%B7%E7%AB%AF?node-id=0-1&t=DTshT7i1BuAcGnWJ-1
 
 Permission: Anyone with the link can view.
+>>>>>>> a2ecec27f4638337ce076e2a740bc9d38f3cfb94

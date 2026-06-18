@@ -109,6 +109,8 @@ studyroom-booking/
 ├── docker-compose.yaml            # 容器编排部署配置
 ├── .gitignore
 └── README.md                      # 项目启动、环境说明文档
+
+
 ## 本地部署安装步骤
 仅提供 Docker 本地容器部署方案，无 Railway 云端部署
 1. 本地电脑安装 Docker、Docker Compose

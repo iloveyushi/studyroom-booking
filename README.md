@@ -69,46 +69,6 @@
 4. 预约管理：全平台预约记录查看，支持学生、教室、时间多条件检索，可撤销异常订单
 5. 黑名单管理：查看拉黑学生列表，支持检索，可对满足条件学生解除拉黑
 
-## 项目目录结构
-```text
-studyroom-booking/
-├── docs/                          # 项目配套文档
-│   ├── contributions/             # 各模块个人贡献说明文档
-│   ├── design/                    # UI界面截图、原型设计图
-│   ├── api/                       # OpenAPI接口文档
-│   ├── database.md                # 数据库设计文档
-│   ├── architecture.md            # 系统架构文档
-│   ├── backend.md
-│   ├── frontend.md
-│   └── design-spec.md
-│
-├── demo-video/                    # 根目录：功能演示视频目录
-│
-├── dev-docs/                      # 根目录：开发配套说明文档、中期/答辩PPT
-│
-├── backend/                       # SpringBoot后端主代码
-│   ├── src/
-│   │   ├── main/
-│   │   │   ├── java/com/mango/    # 业务代码分层
-│   │   │   │   ├── control/       # 控制器层
-│   │   │   │   ├── dao/           # MyBatis数据访问层
-│   │   │   │   ├── pojo/          # 数据库实体类
-│   │   │   │   ├── service/       # 业务逻辑层
-│   │   │   │   └── utils/         # 通用工具类
-│   │   │   └── resources/         # 配置文件、静态页面、MyBatis映射文件
-│   │   └── test/                  # 单元测试目录
-│   ├── backend/                   # 备用Python后端目录
-│   │   └── routes/app/
-│   ├── pom.xml                    # Maven依赖配置
-│   └── Dockerfile                 # 后端镜像构建文件
-│
-├── .github/
-│   └── workflows/
-│       └── ci.yml                 # CI自动化流水线配置
-│
-├── docker-compose.yaml            # 容器编排部署配置
-├── .gitignore
-└── README.md                      # 项目启动、环境说明文档
 
 
 ## 本地部署安装步骤
@@ -164,6 +124,49 @@ docker-compose down
 4. PR 流程：开发完成提交 Pull Request，等待 CI 全绿 + 另一成员人工审核通过方可合并
 5. 文档规范：新增功能同步更新`docs`、`dev-docs`内配套文档资源
 
-## 参考文献
+ ## 参考文献
 [1] MyBatis 官方文档. https://mybatis.org/mybatis-3/zh/index.html
 [2] Docker 官方文档. https://docs.docker.com/
+
+## 项目目录结构
+```text
+studyroom-booking/
+├── docs/                          # 项目配套文档
+│   ├── contributions/             # 各模块个人贡献说明文档
+│   ├── design/                    # UI界面截图、原型设计图
+│   ├── api/                       # OpenAPI接口文档
+│   ├── database.md                # 数据库设计文档
+│   ├── architecture.md            # 系统架构文档
+│   ├── backend.md
+│   ├── frontend.md
+│   └── design-spec.md
+│
+├── demo-video/                    # 根目录：功能演示视频目录
+│
+├── dev-docs/                      # 根目录：开发配套说明文档、中期/答辩PPT
+│
+├── backend/                       # SpringBoot后端主代码
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/com/mango/    # 业务代码分层
+│   │   │   │   ├── control/       # 控制器层
+│   │   │   │   ├── dao/           # MyBatis数据访问层
+│   │   │   │   ├── pojo/          # 数据库实体类
+│   │   │   │   ├── service/       # 业务逻辑层
+│   │   │   │   └── utils/         # 通用工具类
+│   │   │   └── resources/         # 配置文件、静态页面、MyBatis映射文件
+│   │   └── test/                  # 单元测试目录
+│   ├── backend/                   # 备用Python后端目录
+│   │   └── routes/app/
+│   ├── pom.xml                    # Maven依赖配置
+│   └── Dockerfile                 # 后端镜像构建文件
+│
+├── .github/
+│   └── workflows/
+│       └── ci.yml                 # CI自动化流水线配置
+│
+├── docker-compose.yaml            # 容器编排部署配置
+├── .gitignore
+└── README.md                      # 项目启动、环境说明文档
+
+

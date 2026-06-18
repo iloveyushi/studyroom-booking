@@ -109,3 +109,59 @@ studyroom-booking/
 ├── docker-compose.yaml            # 容器编排部署配置
 ├── .gitignore
 └── README.md                      # 项目启动、环境说明文档
+## 本地部署安装步骤
+仅提供 Docker 本地容器部署方案，无 Railway 云端部署
+1. 本地电脑安装 Docker、Docker Compose
+2. 克隆项目完整代码到本地
+git clone https://github.com/你的用户名/studyroom-booking.git
+cd studyroom-booking
+3. 执行 `init_reservation_demo.sql` 数据库脚本，创建数据表与测试数据
+4. 项目根目录执行命令后台启动全套容器
+docker-compose up -d
+5. 服务访问地址
+- 前端页面：http://localhost:5173
+- 后端接口：http://localhost:9099
+- MySQL 数据库：127.0.0.1:3307
+6. 停止整套服务
+docker-compose down
+
+## API 端点说明
+接口基于 Spring MVC 开发，全局携带登录鉴权校验，分为两大业务模块：
+### 学生用户接口
+- 登录、个人信息修改、密码更新
+- 空闲教室查询、预约提交、预约取消、个人预约列表查询
+
+### 管理员接口
+- 学生信息 CRUD、学生拉黑 / 解禁
+- 教室新增、删除、可用时段配置
+- 全平台预约记录查询、异常订单撤销
+
+## 自动化 CI/CD
+项目基于 GitHub Actions 绑定仓库流水线，代码推送、合并 PR 自动执行任务：
+1. `ci.yml`：拉取代码、安装依赖、代码规范检查、执行单元测试、上传覆盖率至 Codecov
+2. `docker.yml`：编译前后端、构建 Docker 镜像、Trivy 镜像漏洞扫描
+3. `security.yml`：Gitleaks 全局扫描仓库，检测密钥、账号敏感信息泄露
+
+主分支强制准入规则：
+1. 全部 CI 流水线必须执行通过（绿色 passing）
+2. 至少一名团队成员完成人工代码审查
+
+双条件满足才可合并代码至主线。
+
+## 贡献指南
+### 团队分工
+| 姓名 | 学号 | 负责内容 |
+| ---- | ---- | -------- |
+| 郭静怡 | 2320100710 | 前端页面开发、Figma UI原型设计、页面交互、页面样式调试、前端文档编写 |
+| 付娆 | 2312190205 | SpringBoot后端开发、数据库设计、MyBatis接口编写、Docker容器部署、单元测试、后端文档编写 |
+
+### 开发规范
+1. 分支规范：日常开发使用`develop`分支，稳定版本合并至`main`主分支
+2. 提交规范：commit 注释清晰描述修改内容、修复点、新增功能
+3. 代码规范：遵循 Java、前端统一编码规范，CI 流水线自动校验
+4. PR 流程：开发完成提交 Pull Request，等待 CI 全绿 + 另一成员人工审核通过方可合并
+5. 文档规范：新增功能同步更新`docs`、`dev-docs`内配套文档资源
+
+## 参考文献
+[1] MyBatis 官方文档. https://mybatis.org/mybatis-3/zh/index.html
+[2] Docker 官方文档. https://docs.docker.com/
